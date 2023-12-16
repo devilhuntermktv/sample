@@ -2,9 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sample Web Page</title>
+  <title>Visitor Log Form</title>
 </head>
 <body>
-  <h1>Hi! This is a sample web page</h1>
+  <h1>Welcome to Our Website!</h1>
+
+  <form id="logForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    document.getElementById('logForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Get the form data
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      // Create an object with the collected data
+      const logData = {
+        name: name,
+        email: email,
+        timestamp: new Date().toISOString() // Optional: Include a timestamp
+      };
+
+      // Send the data to a server (Replace 'your-server-endpoint' with your actual server endpoint)
+      fetch('https://your-server-endpoint.com/log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(logData)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Visitor log recorded successfully.');
+          // Optionally, perform actions after successful logging
+        } else {
+          console.error('Failed to log visitor.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
