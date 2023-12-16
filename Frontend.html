@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor Logger</title>
+</head>
+<body>
+    <h1>Welcome to the Visitor Logger</h1>
+    <button onclick="logVisitor()">Log Visit</button>
+
+    <script>
+        function logVisitor() {
+            const userAgent = navigator.userAgent;
+            const ip = 'Not available in client-side JavaScript'; // IP cannot be obtained directly in client-side JavaScript due to security reasons
+            const location = 'Not available in client-side JavaScript'; // Geolocation also can't be obtained directly
+
+            const logData = {
+                userAgent: userAgent,
+                ip: ip,
+                location: location
+            };
+
+            // Send data to a backend server for logging (via AJAX/fetch)
+            sendDataToServer(logData);
+        }
+
+        function sendDataToServer(data) {
+            // Perform AJAX/fetch request to your backend server to log data
+            // For example:
+            fetch('https://your-backend-server.com/log', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Visitor log recorded successfully.');
+                } else {
+                    console.error('Failed to log visitor.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
